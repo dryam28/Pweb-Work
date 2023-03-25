@@ -21,9 +21,9 @@
   "homepage": "https://github.com/dryam28/Pweb-Work#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "morgan": "^1.10.0",
-    "pug": "^3.0.2"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

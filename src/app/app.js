@@ -1,8 +1,9 @@
 const morgan = require('morgan')
 const express = require('express')
+const ejs = require('ejs');
 const app = express()
 
-app.set('view engine', 'pug')
+app.set('view engine', 'ejs')
 app.set('views',  __dirname + '/../public/views')
 
 //middlewares

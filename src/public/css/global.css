@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url(../Fonts/Roboto-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn-uci{
+    background: linear-gradient(90deg, #2f557b, #6d8fad);
+    color: white !important;
+    border: #2f557b;
+    padding: 7px;
+    transition: all .3s ease;
+}
+
+.btn-uci:hover{
+    background: linear-gradient(90deg, #3c658d, #7d9ebb);
+}
+
+.input-text-uci{
+    border: 2px solid #3c658d;
+}
