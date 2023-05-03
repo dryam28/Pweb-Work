@@ -8,6 +8,7 @@ app.set('views', __dirname + '/../public/views');
 //middlewares
 // app.use(morgan('dev'))
 app.use(express.static(__dirname.replace('app', 'public')));
+app.use(express.urlencoded({ extended: true }));
 
 //router
 app.use('/auth', require('./routes/auth.routes'));

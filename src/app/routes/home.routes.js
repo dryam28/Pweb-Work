@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const { home } = require('../controllers/home.controller');
+const { getHome, createWorker } = require('../controllers/home.controller');
 
-router.get('/', home);
+router.get('/', getHome);
+router.post('/add', createWorker);
 
 module.exports = router;

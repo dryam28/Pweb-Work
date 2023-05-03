@@ -1,11 +1,20 @@
 const Worker_Model = require("../models/Worker_Model");
 
-const home = async (req, res) => {
+const getHome = async (req, res) => {
     // const worker = await Worker_Model.findByPk(1)
     const workers = await Worker_Model.findAll({ raw: true })
-    res.render('pages/Dashboard', { workers });
+    return res.render('pages/Dashboard', { workers });
+}
+
+const createWorker = async (req, res) => {
+    // const worker = await Worker_Model.findByPk(1)
+    // console.log(req.body);
+    const worker = new Worker_Model(req.body)
+    await worker.save()
+    return res.redirect('/');
 }
 
 module.exports = {
-    home,
+    getHome,
+    createWorker
 };
