@@ -1,1 +1,1 @@
-alert('dasd')
+alert('dasd');
