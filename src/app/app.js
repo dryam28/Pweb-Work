@@ -1,5 +1,9 @@
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const express = require('express');
+const session = require('express-session');
+const csrf = require('csurf');
+const flash = require('connect-flash');
+const passport = require('passport');
 const app = express();
 
 app.set('view engine', 'ejs');

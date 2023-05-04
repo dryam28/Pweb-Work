@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="../../css/WorkersTable/index.css" />
+
+<div class="container-fluid">
+  <div class="row d-flex">
+    <div class="col-auto"><h2>Table with Progress Bar</h2></div>
+    <div class="col-auto"><h2>Table with Progress Bar</h2></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget blank no-padding">
+        <div
+          class="panel panel-default work-progress-table"
+          style="max-width: 100%; overflow-x: auto">
+          <!-- Table -->
+          <% if (workers) { %>
+          <table id="mytable" class="table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="checkall" /></th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Correo</th>
+                <th>CI</th>
+                <th>Categoría Docente</th>
+                <th>Grado Científico</th>
+                <th>Especialidad</th>
+                <th>Cargo</th>
+                <th>Disponibilidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i = 0; i < workers.length; i++) { %>
+              <tr>
+                <td><input type="checkbox" class="checkthis" /></td>
+                <td><%= workers[i].name %></td>
+                <td><%= workers[i].lastName %></td>
+                <td><%= workers[i].age %></td>
+                <td><%= workers[i].email %></td>
+                <td><%= workers[i].ci %></td>
+                <td><%= workers[i].teachingCategory %></td>
+                <td><%= workers[i].scientificDegree %></td>
+                <td><%= workers[i].speciality %></td>
+                <td><%= workers[i].charge %></td>
+                <td><%= workers[i].availability === 1? 'Si' : 'No' %></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="delete"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="edit"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+        <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger">
+          <span class="glyphicon glyphicon-warning-sign"></span> Are you sure
+          you want to delete this Record?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success">
+          <span class="glyphicon glyphicon-ok-sign"></span> Yes
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span> No
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let checkAll = document.querySelector('#mytable #checkall');
+      console.log(checkAll);
+      checkAll.addEventListener('click', function () {
+        if (checkAll.checked) {
+          var checkboxes = document.querySelectorAll(
+            '#mytable input[type=checkbox]',
+          );
+          checkboxes.forEach(function (checkbox) {
+            checkbox.checked = true;
+          });
+        } else {
+          var checkboxes = document.querySelectorAll(
+            '#mytable input[type=checkbox]',
+          );
+          checkboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+          });
+        }
+      });
+
+      var tooltips = document.querySelectorAll('[data-toggle=tooltip]');
+      tooltips.forEach(function (tooltip) {
+        new bootstrap.Tooltip(tooltip);
+      });
+    });
+  </script>
+</div>

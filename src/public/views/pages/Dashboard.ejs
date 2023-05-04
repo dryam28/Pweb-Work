@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/global.css" />
+    <link rel="stylesheet" href="../../icons/font/bootstrap-icons.min.css">
     <style>
       /* .table {
         overflow-x: auto;
@@ -35,43 +36,9 @@
       </div>
       <button type="submit">Submit</button>
     </form>
-    <% if (workers) { %>
-
-    <table class="table table-striped">
-      <thead class="">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellidos</th>
-          <th scope="col">Edad</th>
-          <th scope="col">Correo</th>
-          <th scope="col">CI</th>
-          <th scope="col">Categoría Docente</th>
-          <th scope="col">Grado Científico</th>
-          <th scope="col">Especialidad</th>
-          <th scope="col">Cargo</th>
-          <th scope="col">Disponibilidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for (let i = 0; i < workers.length; i++) { %>
-        <tr>
-          <th scope="row"><%= i+1 %></th>
-          <td><%= workers[i].name %></td>
-          <td><%= workers[i].lastName %></td>
-          <td><%= workers[i].age %></td>
-          <td><%= workers[i].email %></td>
-          <td><%= workers[i].ci %></td>
-          <td><%= workers[i].teachingCategory %></td>
-          <td><%= workers[i].scientificDegree %></td>
-          <td><%= workers[i].speciality %></td>
-          <td><%= workers[i].charge %></td>
-          <td><%= workers[i].availability === 1? 'Si' : 'No' %></td>
-        </tr>
-        <% } %>
-      </tbody>
-    </table>
-    <% } %>
     
+
+    <!-- <%- include('../components/Dashboard/table', { workers: workers }) %> -->
+    <%- include('../components/Dashboard/table2') %>
   </body>
 </html>
