@@ -14,7 +14,15 @@ const createWorker = async (req, res) => {
     return res.redirect('/');
 }
 
+const deleteWorkers = async (req, res) => {
+    const dataToDelete = JSON.parse(req.body.dataToDelete);
+    await Worker_Model.destroy({ where: { id: dataToDelete } })
+    res.status(200).json({ok:true})
+
+}
+
 module.exports = {
     getHome,
-    createWorker
+    createWorker,
+    deleteWorkers
 };

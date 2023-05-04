@@ -23,6 +23,7 @@ const Worker_Model = sequelize.define('Workers', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     ci: {
         type: DataTypes.STRING,

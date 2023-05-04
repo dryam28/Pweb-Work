@@ -1,44 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../css/global.css" />
-    <link rel="stylesheet" href="../../icons/font/bootstrap-icons.min.css">
-    <style>
-      /* .table {
-        overflow-x: auto;
-        max-width: 400px;
-      } */
-    </style>
-  </head>
-  <body>
-    <form action="/add" method="post" class="d-flex flex-column align-items-center">
-      Añadir trabajador
-      <input type="text" placeholder="Nombre" name="name">
-      <input type="text" placeholder="Apellidos" name="lastName">
-      <input type="text" placeholder="Correo" name="email">
-      <input type="number" placeholder="Edad" name="age">
-      <input type="text" placeholder="Carne de identidad" name="ci">
-      <input type="text" placeholder="Categoría docente" name="teachingCategory">
-      <input type="text" placeholder="Grado científico" name="scientificDegree">
-      <input type="text" placeholder="Especialidad" name="speciality">
-      <input type="text" placeholder="Cargo" name="charge">
-      <div>
-        <div>Disponible</div>
-        <input type="radio" value="1" name="availability">
-        <label>Si</label>
-        <input class="ms-3" type="radio" value="0" name="availability">
-        <label>No</label>
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-    
+<%- include('../components/Layout/head')%>
 
-    <!-- <%- include('../components/Dashboard/table', { workers: workers }) %> -->
-    <%- include('../components/Dashboard/table2') %>
-  </body>
-</html>
+  <form action="/add" method="post" class="d-flex flex-column align-items-center">
+    Añadir trabajador
+    <input type="text" placeholder="Nombre" name="name" />
+    <input type="text" placeholder="Apellidos" name="lastName" />
+    <input type="text" placeholder="Correo" name="email" />
+    <input type="number" placeholder="Edad" name="age" />
+    <input type="text" placeholder="Carne de identidad" name="ci" />
+    <input type="text" placeholder="Categoría docente" name="teachingCategory" />
+    <input type="text" placeholder="Grado científico" name="scientificDegree" />
+    <input type="text" placeholder="Especialidad" name="speciality" />
+    <input type="text" placeholder="Cargo" name="charge" />
+    <div>
+      <div>Disponible</div>
+      <input type="radio" value="1" name="availability" />
+      <label>Si</label>
+      <input class="ms-3" type="radio" value="0" name="availability" />
+      <label>No</label>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Workers Table -->
+  <%- include('../components/Dashboard/workersTable') %>
+  <!-- /Workers Table -->
+  
+<%- include('../components/Layout/footer')%>
