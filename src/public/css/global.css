@@ -9,9 +9,31 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.bg-uci {
-  background: #2f557b;
+/* Muestra la barra de desplazamiento siempre */
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+  height: 7px;
 }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+/* Muestra la barra de desplazamiento solo cuando se desplaza */
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.bg-uci {
+  background: #2f557b !important;
+}
+.bg-uci-darker {
+  background: #1e364e !important;
+}
+
 
 .btn-uci {
   background: linear-gradient(90deg, #2f557b, #6d8fad);

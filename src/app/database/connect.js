@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -12,4 +12,4 @@ sequelize
   )
   .catch(e => console.error('Unable to connect to the database:', e.message));
 
-module.exports = sequelize;
+export default sequelize;

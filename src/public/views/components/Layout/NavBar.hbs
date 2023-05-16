@@ -1,0 +1,45 @@
+<link rel='stylesheet' href='../../../css/Layout/NavBar.css' />
+
+<header class='header bg-uci text-white ' style="cursor: pointer;" id='header'>
+  <div class='header_toggle p-1' id='header-toggle'>
+    <i class='bi bi-list '></i>
+  </div>
+  <div class='header_img'>
+    <img src='https://i.imgur.com/hczKIze.jpg' alt='' />
+  </div>
+</header>
+<div class='l-navbar py-5 p-md-0' id='nav-bar'>
+  <a href='#' class='d-none d-md-grid nav_logo bg-uci-darker'>
+    <img src="../../../img/Logo.png" alt="" srcset="">
+    <span class='nav_logo-name'>HHRR4</span>
+  </a>
+  <i id="closeDrawerButton" class="bi bi-x-lg position-absolute text-white d-md-none p-2" style="right: 10; top: 10; font-size: 1.5rem;"></i>
+  <nav class='nav'>
+    <div>
+      <div class='nav_list' id="nav_list">
+        <a href='/' class='nav_link'>
+          <i class="bi bi-speedometer2"></i>
+          <span class='nav_name'>Tablero</span>
+        </a>
+        <a href='/users' class='nav_link'>
+          <i class='bi bi-person'></i>
+          <span class='nav_name'>Usuarios</span>
+        </a>
+        <a href='/workers' class='nav_link'>
+          <i class='bi bi-people'></i>
+          <span class='nav_name'>Trabajadores</span>
+        </a>
+        <a href='/requests' class='nav_link'>
+          <i class='bi bi-list-nested'></i>
+          <span class='nav_name'>Solicitudes</span>
+        </a>
+      </div>
+    </div>
+    <a href='#' class='nav_link'>
+      <i class='bx bx-log-out nav_icon'></i>
+      <span class='nav_name'>SignOut</span>
+    </a>
+  </nav>
+</div>
+
+<script src='../../../js/Layout//NavBar.js'></script>

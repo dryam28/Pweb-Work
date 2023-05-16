@@ -1,5 +1,5 @@
-const loginForm = (req, res) => res.render('pages/Login');
+const loginForm = (req, res) => res.render('pages/Login', {layout:false});
 
-module.exports = {
+export {
   loginForm,
 };

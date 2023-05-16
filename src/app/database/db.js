@@ -1,2 +1,4 @@
-require('../models/Worker_Model');
-require('./connect').sync({ alter: true });
+import '../models/Worker_Model.js';
+import '../models/Worker_Model.js'
+import connect from './connect.js'
+connect.sync({ alter: true })

@@ -1,0 +1,56 @@
+<form action="/editworker/{{worker.id}}" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="name" value="{{worker.name}}">
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" name="lastName" value="{{worker.lastName}}">
+            </div>
+            <div class="form-group">
+                <label for="edad">Edad:</label>
+                <input type="text" class="form-control" id="edad" name="age" value="{{worker.age}}">
+            </div>
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{worker.email}}">
+            </div>
+            <div class="form-group">
+                <label for="ci">CI:</label>
+                <input type="text" class="form-control" id="ci" name="ci" value="{{worker.ci}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="categoria">Categoría de enseñanza:</label>
+                <input type="text" class="form-control" id="categoria" name="teachingCategory"
+                    value="{{worker.teachingCategory}}">
+            </div>
+            <div class="form-group">
+                <label for="grado">Grado científico:</label>
+                <input type="text" class="form-control" id="grado" name="scientificDegree"
+                    value="{{worker.scientificDegree}}">
+            </div>
+            <div class="form-group">
+                <label for="especialidad">Especialidad:</label>
+                <input type="text" class="form-control" id="especialidad" name="speciality"
+                    value="{{worker.speciality}}">
+            </div>
+            <div class="form-group">
+                <label for="cargo">Cargo:</label>
+                <input type="text" class="form-control" id="cargo" name="charge" value="{{worker.charge}}">
+            </div>
+            <div class="form-group">
+                <label for="disponible">Disponible:</label>
+                <input type="text" class="form-control" id="disponible" name="availability"
+                    value="{{worker.availability}}">
+            </div>
+        </div>
+    </div>
+    <div class="text-right mt-3">
+        <button type="submit" class="btn btn-primary mr-2">Guardar cambios</button>
+        <a href="/workers" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

@@ -1,0 +1,20 @@
+<div class="modal fade" id={{idModal}} aria-hidden="true">
+    <div class="modal-dialog bg-light">
+        <div class="modal-content ">
+            <button type="button" class="btn-close position-absolute" style="right: 10; top: 10;"
+                data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header mt-3">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{title}}</h1>
+            </div>
+            <div class="modal-body">{{text}}</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" onclick="{{handler}}()">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

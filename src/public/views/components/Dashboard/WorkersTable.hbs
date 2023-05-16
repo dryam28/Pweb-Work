@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="../../../css/WorkersTable/index.css">
+
+<div class="container-fluid px-4">
+  <div class="row d-flex justify-content-between align-content-center">
+    <div class="col-auto">
+      <h2>Trabajadores</h2>
+    </div>
+    <div class="col-auto">
+      <button id="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createWorkerModal">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+      <button id="deleteButton" class="btn btn-danger disabled" data-bs-toggle="modal"
+        data-bs-target="#deleteWorkerModal">
+        <i class="bi bi-trash-fill"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget blank no-padding">
+        <div class="panel panel-default work-progress-table" style="max-width: 100%; overflow-x: scroll">
+          <!-- Table -->
+          {{#if workers}}
+          <table id="mytable" class="table ">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="checkall" /></th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Disponible</th>
+                {{!-- <th>Edad</th>
+                <th>CI</th>
+                <th>Categoría Docente</th>
+                <th>Grado Científico</th>
+                <th>Especialidad</th>
+                <th>Cargo</th> --}}
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              {{#each workers}}
+              <tr style="vertical-align: middle;">
+                <td><input id="{{id}}" type="checkbox" class="checkthis" /></td>
+                <td>{{name}}</td>
+                <td>{{lastName}}</td>
+                <td>{{email}}</td>
+                <td>{{#if availability}}Si{{else}}No{{/if}}</td>
+                {{!-- <td>{{age}}</td>
+                <td>{{ci}}</td>
+                <td>{{teachingCategory}}</td>
+                <td>{{scientificDegree}}</td>
+                <td>{{speciality}}</td>
+                <td>{{charge}}</td> --}}
+                <td>
+                  <a href="/workers/{{id}}" class="btn btn-outline-secondary p-2 ">
+                    <i class="bi bi-eye-fill" style="font-size: 1.3rem;"></i>
+                  </button>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- {{> Generals/Modal idModal='exampleModal' actionBMsg='Eliminar' title='Eliminar datos sd sd asdsadads' msg='¿Desea
+eliminar esta información?' handler='deleteData'}} --}}
+{{> Generals/DeleteModal idModal='deleteWorkerModal' title='Eliminar datos' text='¿Desea eliminar esta información?'
+handler='deleteData'}}
+{{> Workers/Modals/CreateWorkerModal idModal='createWorkerModal' title='Agregar trabajador'}}
+{{> Workers/Modals/ViewWorkerInfoModal idModal='viewWorkerModal' title='Datos trabajador'  }}
+<h1>{{info}}</h1>
+<script>
+  const info = 'dasdsa'
+  const deleteData = () => {
+    let dataToDelete = []
+    document.querySelectorAll('.checkthis').forEach(item => {
+      if (item.checked) dataToDelete.push(item.id)
+    })
+
+    const data = new URLSearchParams();
+    data.append('dataToDelete', JSON.stringify(dataToDelete));
+
+    fetch("/delete", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: data.toString(),
+    }).then(resp => window.location.reload())
+
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    const worker ='dsdsad'
+    const tableBodyCheckBoxes = document.querySelectorAll('.checkthis');
+    const deleteButton = document.getElementById('deleteButton');
+    const checkAll = document.querySelector('#mytable #checkall');
+
+
+    tableBodyCheckBoxes.forEach(item => {
+      item.addEventListener('click', () => checkSelectedCheckBoxes());
+    });
+
+    const checkSelectedCheckBoxes = () => {
+      let flag = false;
+      tableBodyCheckBoxes.forEach(item => {
+        if (item.checked) flag = true;
+      });
+
+      flag
+        ? deleteButton.classList.remove('disabled')
+        : deleteButton.classList.add('disabled');
+    };
+
+    checkAll.addEventListener('click', function () {
+      if (checkAll.checked) {
+        deleteButton.classList.remove('disabled');
+        let checkboxes = document.querySelectorAll(
+          '#mytable input[type=checkbox]',
+        );
+        checkboxes.forEach(function (checkbox) {
+          checkbox.checked = true;
+        });
+      } else {
+        deleteButton.classList.add('disabled');
+        let checkboxes = document.querySelectorAll(
+          '#mytable input[type=checkbox]',
+        );
+        checkboxes.forEach(function (checkbox) {
+          checkbox.checked = false;
+        });
+      }
+    });
+
+    var tooltips = document.querySelectorAll('[data-toggle=tooltip]');
+    tooltips.forEach(function (tooltip) {
+      new bootstrap.Tooltip(tooltip);
+    });
+  });
+</script>
+</div>
