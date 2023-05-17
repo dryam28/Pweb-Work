@@ -1,4 +1,5 @@
 import Worker_Model from '../models/Worker_Model.js'
+import xlsx from 'xlsx'
 
 const getHome = async (req, res) => {
     const workers = await Worker_Model.findAll({ raw: true })
@@ -41,6 +42,37 @@ const deleteWorkers = async (req, res) => {
 
 }
 
+const generateExcel2 = async (req, res) => {
+    // Crear el archivo Excel
+    const workbook = xlsx.utils.book_new();
+    const worksheet = xlsx.utils.json_to_sheet([
+        JSON.parse(req.body.datosJSON)
+    ]);
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'Datos');
+
+    // Descargar el archivo Excel en la PC del cliente
+    const nombreArchivo = 'datos.xlsx';
+    res.setHeader('Content-Disposition', 'attachment; filename=' + nombreArchivo);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.send(xlsx.write(workbook, { type: 'buffer' }));
+}
+
+const generateExcel = async (req, res) => {
+    const data = JSON.parse(req.body.datosJSON);
+    const workers = await Worker_Model.findAll({ where: { id: data }, raw: true });
+
+    // Crear el archivo Excel
+    const workbook = xlsx.utils.book_new();
+    const worksheet = xlsx.utils.json_to_sheet(workers);
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'Datos');
+
+    // Descargar el archivo Excel en la PC del cliente
+    const nombreArchivo = 'datos.xlsx';
+    res.setHeader('Content-Disposition', 'attachment; filename=' + nombreArchivo);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.send(xlsx.write(workbook, { type: 'buffer' }));
+}
+
 export {
     getHome,
     getUsers,
@@ -49,5 +81,6 @@ export {
     editWorker,
     getRequests,
     createWorker,
-    deleteWorkers
+    deleteWorkers,
+    generateExcel
 };

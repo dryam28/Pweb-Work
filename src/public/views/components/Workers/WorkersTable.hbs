@@ -15,10 +15,20 @@
       </button>
     </div>
   </div>
+  <div class="mb-3 d-flex border-bottom border-secondary">
+    <button id="exportDataButton" class="btn btn-sm disabled d-flex align-items-center me-3">
+      <i class="bi bi-box-arrow-down me-2"></i>Exportar
+      Datos</button>
+    <button  class="btn btn-sm me-3">
+      <i class="bi bi-filter me-2"></i>Filtrar</button>
+    <button  class="btn btn-sm me-3">
+      <i class="bi bi-search me-2"></i>Buscar</button>
+  </div>
   <div class="row">
     <div class="col-md-12">
       <div class="widget blank no-padding">
-        <div class="panel panel-default work-progress-table" style="max-width: 100%; overflow-x: scroll">
+        <div class="panel panel-default work-progress-table"
+          style="max-width: 100%; overflow: auto; max-height: 25rem;">
           <!-- Table -->
           {{#if workers}}
           <table id="mytable" class="table ">
@@ -55,7 +65,7 @@
                 <td>
                   <a href="/workers/{{id}}" class="btn btn-outline-secondary p-2 ">
                     <i class="bi bi-eye-fill" style="font-size: 1.3rem;"></i>
-                  </button>
+                    </button>
                 </td>
               </tr>
               {{/each}}
@@ -73,10 +83,9 @@ eliminar esta información?' handler='deleteData'}} --}}
 {{> Generals/DeleteModal idModal='deleteWorkerModal' title='Eliminar datos' text='¿Desea eliminar esta información?'
 handler='deleteData'}}
 {{> Workers/Modals/CreateWorkerModal idModal='createWorkerModal' title='Agregar trabajador'}}
-{{> Workers/Modals/ViewWorkerInfoModal idModal='viewWorkerModal' title='Datos trabajador'  }}
-<h1>{{info}}</h1>
+{{> Workers/Modals/ViewWorkerInfoModal idModal='viewWorkerModal' title='Datos trabajador' }}
+
 <script>
-  const info = 'dasdsa'
   const deleteData = () => {
     let dataToDelete = []
     document.querySelectorAll('.checkthis').forEach(item => {
@@ -96,9 +105,10 @@ handler='deleteData'}}
 
   }
   document.addEventListener('DOMContentLoaded', function () {
-    const worker ='dsdsad'
+    const worker = 'dsdsad'
     const tableBodyCheckBoxes = document.querySelectorAll('.checkthis');
     const deleteButton = document.getElementById('deleteButton');
+    const exportDataButton = document.getElementById('exportDataButton');
     const checkAll = document.querySelector('#mytable #checkall');
 
 
@@ -107,19 +117,25 @@ handler='deleteData'}}
     });
 
     const checkSelectedCheckBoxes = () => {
-      let flag = false;
+      let isSelectedSomething = false;
       tableBodyCheckBoxes.forEach(item => {
-        if (item.checked) flag = true;
+        if (item.checked) isSelectedSomething = true;
       });
 
-      flag
-        ? deleteButton.classList.remove('disabled')
-        : deleteButton.classList.add('disabled');
+      if (isSelectedSomething) {
+        deleteButton.classList.remove('disabled')
+        exportDataButton.classList.remove('disabled')
+      } else {
+        deleteButton.classList.add('disabled');
+        exportDataButton.classList.add('disabled');
+      }
+
     };
 
     checkAll.addEventListener('click', function () {
       if (checkAll.checked) {
         deleteButton.classList.remove('disabled');
+        exportDataButton.classList.remove('disabled')
         let checkboxes = document.querySelectorAll(
           '#mytable input[type=checkbox]',
         );
@@ -128,6 +144,7 @@ handler='deleteData'}}
         });
       } else {
         deleteButton.classList.add('disabled');
+        exportDataButton.classList.add('disabled');
         let checkboxes = document.querySelectorAll(
           '#mytable input[type=checkbox]',
         );
@@ -140,6 +157,36 @@ handler='deleteData'}}
     var tooltips = document.querySelectorAll('[data-toggle=tooltip]');
     tooltips.forEach(function (tooltip) {
       new bootstrap.Tooltip(tooltip);
+    });
+
+    exportDataButton.addEventListener("click", function () {
+      let dataToExport = []
+      document.querySelectorAll('.checkthis').forEach(item => {
+        if (item.checked) dataToExport.push(item.id)
+      })
+     
+      const data = new URLSearchParams();
+      data.append('datosJSON', JSON.stringify(dataToExport));
+      fetch('/download-excel', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data.toString(),
+      })
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'datos.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          link.parentNode.removeChild(link);
+        })
+        .catch(error => {
+          console.error('Hubo un error al descargar el archivo Excel: ', error);
+        });
     });
   });
 </script>
