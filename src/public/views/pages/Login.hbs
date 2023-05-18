@@ -37,18 +37,20 @@
 				<img src="../../img/DOCENTE-5.jpg" class="card-img-top w-100" alt="fotodocente" />
 				<div class="card-body px-3 rounded-0">
 					<h5 class="fw-bolder mb-3">Inicio de sesión</h5>
-					<form action="" id="loginForm">
+					<div class="text-danger text-center fw-bold" id="errorMsg"></div>
+					<form action="/auth/login" method="post" id="loginForm">
+					{{!-- <input type='hidden' name='_csrf' value='{{csrfToken}}' /> --}}
 						<!-- !Email input -->
 						<div class="mb-3">
 							<label for="emailInput" class="mb-2">Correo</label>
-							<input id="emailInput" type="email" class="form-control input-text-uci"
+							<input value="admin@admin.com" id="emailInput" type="email" name="email" class="form-control input-text-uci"
 								placeholder="usuario@uci.cu" />
 						</div>
 						<!-- !Passsword input -->
 						<div class="mb-3">
 							<label for="emailInput" class="mb-2">Contraseña</label>
-							<input id="emailInput" type="password" class="form-control input-text-uci"
-								placeholder="Introduzca su contrseña" />
+							<input id="passwordInput" type="password" name="password" class="form-control input-text-uci"
+								placeholder="Introduzca su contrseña" value="admin"/>
 						</div>
 						<button type="submit" class="btn btn-uci w-100 py-3 py-sm-2 mt-2">
 							Iniciar sesión
@@ -72,12 +74,13 @@
 			event.preventDefault();
 
 			const nombre = document.querySelector('#emailInput').value;
-			if (!nombre) {
-				alert('Debes introducir un nombre');
+			const password = document.querySelector('#passwordInput').value;
+			if (!nombre || !password) {
+				document.getElementById('errorMsg').innerHTML = 'Campos vacíos'
 				return;
 			}
-  
-			// form.submit();
+
+			form.submit();
 		})
 	</script>
 </body>

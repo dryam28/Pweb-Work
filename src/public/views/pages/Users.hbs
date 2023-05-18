@@ -1,1 +1,61 @@
-<h1>Users</h1>
+<link rel="stylesheet" href="../../../css/WorkersTable/index.css">
+<style>
+    .search-input-no-border {
+        border: none;
+    }
+
+    .search-input-no-border:focus {
+        border: none;
+        box-shadow: none;
+    }
+</style>
+<div class="container-fluid px-4">
+    <div class="row d-flex justify-content-between align-content-center">
+        <div class="col-auto">
+            <h2>Usuarios</h2>
+        </div>
+        <div class="col-auto">
+            <button id="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+            <button id="deleteButton" class="btn btn-danger disabled" data-bs-toggle="modal"
+                data-bs-target="#deleteWorkerModal">
+                <i class="bi bi-trash-fill"></i>
+            </button>
+        </div>
+    </div>
+    <div class="mb-3 d-flex pb-2 border-bottom border-secondary">
+        <div class=" me-3  d-flex align-items-center bg-white ps-2">
+            <i class="bi bi-search me-2" style=" left: 0px; top: 0px; z-index: 10;"></i>
+            <input type="text" class="form-control search-input-no-border" placeholder="Buscar">
+        </div>
+        <button class="btn btn-sm me-3">
+            <i class="bi bi-filter me-2"></i>Filtrar</button>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget blank no-padding">
+                <div class="panel panel-default work-progress-table"
+                    style="max-width: 100%; overflow: auto; max-height: 25rem;">
+                    <!-- Table -->
+                    {{#if users}}
+                    <!-- Workers Table -->
+                    {{> Users/UsersTable }}
+                    <!-- /Workers Table -->
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- {{> Generals/Modal idModal='exampleModal' actionBMsg='Eliminar' title='Eliminar datos sd sd asdsadads' msg='¿Desea
+eliminar esta información?' handler='deleteData'}} --}}
+{{> Generals/DeleteModal idModal='deleteWorkerModal' title='Eliminar datos' text='¿Desea eliminar esta información?'
+handler='deleteUsers'}}
+{{> Users/Modals/CreateUserModal idModal='createUserModal' title='Agregar usuario jefe de departamento'}}
+
+
+<script src="../../js/Users/index.js"></script>

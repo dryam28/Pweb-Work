@@ -1,17 +1,14 @@
 import Worker_Model from '../models/Worker_Model.js'
 import xlsx from 'xlsx'
 
-const getHome = async (req, res) => {
-    const workers = await Worker_Model.findAll({ raw: true })
-    return res.render('pages/Dashboard', { workers });
-}
-const getUsers = async (req, res) => {
-    return res.render('pages/Users');
-}
-
 const getWorkers = async (req, res) => {
-    const workers = await Worker_Model.findAll({ raw: true })
-    return res.render('pages/Workers', { workers });
+    const whereoptions = {}
+    if (req.user.role !== 'admin') {
+
+        whereoptions.UserId = req.user.id
+    }
+    const workers = await Worker_Model.findAll({ raw: true, where: whereoptions })
+    return res.render('pages/Workers', { workers, user: req.user });
 }
 
 const getWorker = async (req, res) => {
@@ -19,12 +16,10 @@ const getWorker = async (req, res) => {
     return res.render('pages/Worker', { worker });
 }
 
-const getRequests = async (req, res) => {
-    return res.render('pages/Requests');
-}
-
 const createWorker = async (req, res) => {
     const worker = new Worker_Model(req.body)
+    worker.UserId = req.user.id
+    console.log(worker);
     await worker.save()
     return res.redirect('/workers');
 }
@@ -37,24 +32,18 @@ const editWorker = async (req, res) => {
 
 const deleteWorkers = async (req, res) => {
     const dataToDelete = JSON.parse(req.body.dataToDelete);
+    if (req.user.role !== 'admin') {
+        const workers = await Worker_Model.findAll({ raw: true, where: { id: dataToDelete } });
+        let flag = false
+        workers.forEach(item => {
+            if (item.UserId !== req.user.id) flag = true
+        })
+        if (flag) return res.json({msg:'No tienes permisos para realizar esta acción'})
+    }
+
     await Worker_Model.destroy({ where: { id: dataToDelete } })
     res.status(200).json({ ok: true })
 
-}
-
-const generateExcel2 = async (req, res) => {
-    // Crear el archivo Excel
-    const workbook = xlsx.utils.book_new();
-    const worksheet = xlsx.utils.json_to_sheet([
-        JSON.parse(req.body.datosJSON)
-    ]);
-    xlsx.utils.book_append_sheet(workbook, worksheet, 'Datos');
-
-    // Descargar el archivo Excel en la PC del cliente
-    const nombreArchivo = 'datos.xlsx';
-    res.setHeader('Content-Disposition', 'attachment; filename=' + nombreArchivo);
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.send(xlsx.write(workbook, { type: 'buffer' }));
 }
 
 const generateExcel = async (req, res) => {
@@ -74,12 +63,9 @@ const generateExcel = async (req, res) => {
 }
 
 export {
-    getHome,
-    getUsers,
     getWorkers,
     getWorker,
     editWorker,
-    getRequests,
     createWorker,
     deleteWorkers,
     generateExcel
