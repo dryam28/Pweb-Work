@@ -3,7 +3,7 @@ import sequelize from '../database/connect.js';
 import bcryptjs from 'bcryptjs';
 import Worker_Model from './Worker_Model.js';
 
-const User_Model = sequelize.define('Users', {
+const Request_Model = sequelize.define('Requests', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,

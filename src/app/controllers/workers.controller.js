@@ -19,7 +19,6 @@ const getWorker = async (req, res) => {
 const createWorker = async (req, res) => {
     const worker = new Worker_Model(req.body)
     worker.UserId = req.user.id
-    console.log(worker);
     await worker.save()
     return res.redirect('/workers');
 }

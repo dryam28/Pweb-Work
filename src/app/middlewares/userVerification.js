@@ -11,8 +11,7 @@ const isAdminVerification = (req, res, next) => {
         if (req.user.role === 'admin') {
             return next();
         }
-        return res.status(403).json({ msg: 'no tienes permiso de realizar esta acción' })
-        // throw new Error('No tienes los permisos fui');
+        throw new Error('No tienes permiso de realizar esta acción');
     } catch (error) {
         req.flash('messages', [{ msg: error.message }]);
         return res.redirect('/');
