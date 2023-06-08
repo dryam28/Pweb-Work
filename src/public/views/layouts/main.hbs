@@ -1,20 +1,35 @@
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>HHRR4</title>
-    <link rel='stylesheet' href='../../css/bootstrap.min.css' />
-    <link rel='stylesheet' href='../../css/global.css' />
-    <link rel='stylesheet' href='../../icons/font/bootstrap-icons.min.css' />
-  </head>
-  <body id="body-pd" style="background-color: #EEF5F9;">
-    <header>
-      {{> Layout/NavBar}}
-    </header>
 
-    <main class="pt-5 mt-4 pt-md-4 mx-3 me-md-5">{{{body}}}</main>
-    <script src='../../js/popper.js'></script>
-    <script src='../../js/bootstrap.min.js'></script>
-  </body>
-</html> 
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>HHRR4</title>
+  <link rel='stylesheet' href='../../css/bootstrap.min.css' />
+  <link rel='stylesheet' href='../../css/global.css' />
+  <link rel='stylesheet' href='../../icons/font/bootstrap-icons.min.css' />
+</head>
+
+<body id="body-pd" style="background-color: #EEF5F9;">
+  <header>
+    {{> Layout/NavBar}}
+  </header>
+  {{!-- Flash messages --}}
+  {{#if messages}}
+  <div class="alert bg-secondary text-white alert-dismissible fade show position-fixed w-100 shadow"
+    style="z-index: 100; left:0; top: 0;">
+    {{#each messages}}
+    <strong>{{this.msg}}</strong>
+    {{/each}}
+      <div data-bs-theme="dark">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+  </div>
+  {{/if}}
+
+  <main class="pt-5 mt-4 pt-md-4 mx-3 me-md-5">{{{body}}}</main>
+  <script src='../../js/popper.js'></script>
+  <script src='../../js/bootstrap.min.js'></script>
+</body>
+
+</html>

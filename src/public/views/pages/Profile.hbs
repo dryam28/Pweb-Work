@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de usuario</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../css/global.css">
+    <style>
+        body {
+            background-color: #e5e5e7;
+        }
+
+        .profile-header {
+            background-color: #f5f5f5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+
+        }
+
+        .text-truncate {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .text-truncate h1 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+
+
+        }
+
+        .text-truncate {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: none;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            font-weight: 500;
+            box-shadow: none;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border: none;
+        }
+
+        @media (min-width: 768px) {
+            .profile-header {
+                padding: 50px;
+            }
+
+            .profile-avatar {
+                width: 150px;
+                height: 150px;
+            }
+
+            .profile-name {
+                font-size: 36px;
+            }
+        }
+
+        #message-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+            transform: translateY(-100%);
+            transition: transform .2s ease-in-out;
+        }
+
+        .alert {
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="profile-header d-flex align-items-center">
+                    <a class="position-absolute" style="left: 10px; top: 10px;" href="/">
+                        <i class="bi bi-arrow-left text-dark" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <img src="https://ui-avatars.com/api/?name={{user.name}}&background=random&size=100" alt="Avatar"
+                        class="profile-avatar me-4">
+                    <div class="text-truncate">
+                        <h1 class="profile-name">{{user.name}}</h1>
+                        <p class="profile-info">
+                            {{#ifEquals user.role 'admin'}}
+                            Administrador
+                            {{else}}
+                            Jefe de Departamento
+                            {{/ifEquals}}
+                        </p>
+                    </div>
+                </div>
+                <form action="/auth/save-profile-changes" method="post" id="profileForm">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo:</label>
+                        <input required type="text" class="form-control" name="name" id="name"
+                            placeholder="Escribe tu nombre completo" value="{{user.name}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico:</label>
+                        <input required type="email" class="form-control" name="email" id="email"
+                            placeholder="Escribe tu correo electrónico" value="{{user.email}}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email">Contraseña: <strong>????</strong></label>
+                        <button type="button" id="editPassButton" class="btn btn-light btn-sm ms-3"
+                            style="font-size: 1.2rem;"><i class="bi bi-pencil me-2"></i><span>Editar</span></button>
+                    </div>
+                    <div class="form-group d-none" id="passwordFields">
+                        <label for="password">Contraseña actual:</label>
+                        <input type="password" class="form-control" name="currentPassword" id="currentPassword" <label
+                            for="password">Nueva contraseña:</label>
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="Escribe tu nueva contraseña">
+                        <label for="confirmPassword">Confirmar contraseña:</label>
+                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+                            placeholder="Confirma tu nueva contraseña">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <button type="submit" class="btn btn-uci  w-100">Guardar cambios</button>
+                        <a type="submit" class="btn btn-secondary w-100" href="/">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="message-container">Message</div>
+    {{#if messages}}
+    <div class="alert bg-secondary text-white alert-dismissible fade show position-fixed w-100 shadow"
+        style="z-index: 100; left:0; top: 0;">
+        {{#each messages}}
+        <strong>{{this.msg}}</strong>
+        {{/each}}
+        <div data-bs-theme="dark">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {{/if}}
+
+    <script>
+        const editPassButton = document.getElementById('editPassButton');
+        const passwordFields = document.getElementById('passwordFields');
+
+        editPassButton.addEventListener('click', (e) => {
+            passwordFields.classList.toggle('d-none');
+            const buttonLabelSpan = editPassButton.childNodes[1]
+            if (buttonLabelSpan.innerHTML === 'Editar') buttonLabelSpan.innerHTML = 'Cancelar'
+            else buttonLabelSpan.innerHTML = 'Editar'
+        });
+
+        const profileForm = document.getElementById('profileForm');
+        profileForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const data = new URLSearchParams();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            let password = '';
+            let confirmPassword = '';
+            let currentPassword = '';
+            if (!passwordFields.classList.contains('d-none')) {
+                currentPassword = document.getElementById('currentPassword').value;
+                password = document.getElementById('password').value;
+                confirmPassword = document.getElementById('confirmPassword').value;
+            }
+            if (name.trim() === '' || email.trim() === '' || (!passwordFields.classList.contains('d-none') && (password.trim() === '' || confirmPassword.trim() === '' || currentPassword.trim() === ''))) {
+                showMessage('Todos los campos son obligatorios', 'danger');
+                return;
+            }
+            if (!passwordFields.classList.contains('d-none') && password !== confirmPassword) {
+                showMessage('Las contraseñas no coinciden', 'danger');
+                return;
+            }
+            data.append('name', name);
+            data.append('email', email);
+            if (!passwordFields.classList.contains('d-none')) {
+                data.append('password', password);
+                data.append('confirmPassword', confirmPassword);
+                data.append('currentPassword', currentPassword);
+            }
+
+            fetch("/auth/save-profile-changes", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data.toString(),
+            }).then(resp => window.location.reload())
+
+        });
+
+        function showMessage(message, type) {
+            const messageContainer = document.getElementById('message-container');
+            messageContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                </div>
+            `;
+            messageContainer.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                messageContainer.style.transform = 'translateY(-100%)';
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>

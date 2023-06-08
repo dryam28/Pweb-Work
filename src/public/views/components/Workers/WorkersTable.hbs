@@ -19,8 +19,8 @@
     {{#each workers}}
     <tr style="vertical-align: middle;">
       <td><input id="{{id}}" type="checkbox" class="checkthis" /></td>
-      <td>{{name}}</td>
-      <td>{{lastName}}</td>
+      <td class="text-capitalize">{{name}}</td>
+      <td class="text-capitalize">{{lastName}}</td>
       <td>{{email}}</td>
       <td>{{#if availability}}Si{{else}}No{{/if}}</td>
       {{!-- <td>{{age}}</td>

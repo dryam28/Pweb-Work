@@ -37,20 +37,28 @@
 				<img src="../../img/DOCENTE-5.jpg" class="card-img-top w-100" alt="fotodocente" />
 				<div class="card-body px-3 rounded-0">
 					<h5 class="fw-bolder mb-3">Inicio de sesión</h5>
-					<div class="text-danger text-center fw-bold" id="errorMsg"></div>
+
+					<div class="bg-danger rounded text-white text-center fw-bold" id="errorMsg">
+						{{#if messages}}
+							{{#each messages}}
+								<div>{{this.msg}}</div>
+							{{/each}}
+						{{/if}}
+					</div>
 					<form action="/auth/login" method="post" id="loginForm">
-					{{!-- <input type='hidden' name='_csrf' value='{{csrfToken}}' /> --}}
+						{{!-- <input type='hidden' name='_csrf' value='{{csrfToken}}' /> --}}
 						<!-- !Email input -->
 						<div class="mb-3">
 							<label for="emailInput" class="mb-2">Correo</label>
-							<input value="admin@admin.com" id="emailInput" type="email" name="email" class="form-control input-text-uci"
-								placeholder="usuario@uci.cu" />
+							<input value="admin@admin.com" id="emailInput" type="email" name="email"
+								class="form-control input-text-uci" placeholder="usuario@uci.cu" />
 						</div>
 						<!-- !Passsword input -->
 						<div class="mb-3">
 							<label for="emailInput" class="mb-2">Contraseña</label>
-							<input id="passwordInput" type="password" name="password" class="form-control input-text-uci"
-								placeholder="Introduzca su contrseña" value="admin"/>
+							<input id="passwordInput" type="password" name="password"
+								class="form-control input-text-uci" placeholder="Introduzca su contrseña"
+								value="admin" />
 						</div>
 						<button type="submit" class="btn btn-uci w-100 py-3 py-sm-2 mt-2">
 							Iniciar sesión
