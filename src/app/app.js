@@ -2,11 +2,11 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import express from 'express';
+const app = express();
 import session from 'express-session';
 import csrf from 'csurf';
 import flash from 'connect-flash';
 import passport from 'passport';
-const app = express();
 import { create } from 'express-handlebars';
 import { userVerification, isAdminVerification } from './middlewares/userVerification.js';
 import authRoutes from './routes/auth.routes.js';
@@ -16,6 +16,7 @@ import usersRoutes from './routes/users.routes.js';
 import requestsRoutes from './routes/requests.routes.js';
 import User_Model from './models/User_Model.js';
 
+// Configuracion de la persistencia de datos (cookies o sesiones)
 app.use(
   session({
     secret: 'keyboard cat',
@@ -59,6 +60,7 @@ passport.deserializeUser(async (user, done) => {
   const userDB = await User_Model.findByPk(user.id);
   return done(null, { id: userDB.id, email: userDB.email, role: userDB.role, name: userDB.name });
 });
+// (Fin) Configuracion de la persistencia de datos (cookies o sesiones)
 
 // ------view engine
 const hbs = create({
