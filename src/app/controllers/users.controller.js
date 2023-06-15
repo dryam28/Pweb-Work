@@ -17,10 +17,41 @@ const registerUser = async (req, res) => {
     }
 
     try {
-        const user = new User_Model(req.body)
-        user.role = 'jefe'
-        await user.save()
-        return res.redirect('/users');
+        const { department } = req.body;
+        const existingUser = await User_Model.findOne({ where: { department, role: "jefe" } });
+        if (existingUser) {
+            req.flash("messages", [{ msg: "Ya existe un jefe de departamento de " + department }]);
+            return res.redirect("/users");
+        }
+
+        const user = new User_Model(req.body);
+        user.role = "jefe";
+        await user.save();
+        return res.redirect("/users");
+    } catch (error) {
+        req.flash("messages", [{ msg: error.message }]);
+        return res.redirect("/users");
+    }
+}
+
+const searchUsers = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash("messages", errors.array());
+        return res.redirect("/users");
+    }
+
+    try {
+        const { searchData } = req.body;
+        const users = await sequelize.query(`
+            SELECT name, email, department, role
+            FROM Users
+            WHERE name LIKE '%${searchData}%'
+                OR email LIKE '%${searchData}%'
+                OR department LIKE '%${searchData}%'
+        `);
+        let data = users[0].filter(item => item.role !== 'admin')
+        res.render('pages/Users', { users: data, user: req.user, searchData });
     } catch (error) {
         req.flash('messages', [{ msg: error.message }]);
         return res.redirect('/users');
@@ -69,5 +100,6 @@ const deleteUsers = async (req, res) => {
 export {
     getUsers,
     registerUser,
-    deleteUsers
+    deleteUsers,
+    searchUsers
 }

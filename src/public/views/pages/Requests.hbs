@@ -1,1 +1,71 @@
-<h1>Request</h1>
+<link rel="stylesheet" href="../../../css/WorkersTable/index.css">
+<style>
+    .search-input-no-border {
+        border: none;
+    }
+
+    .search-input-no-border:focus {
+        border: none;
+        box-shadow: none;
+    }
+</style>
+<div class="container-fluid px-4">
+    <div class="row d-flex justify-content-between align-content-center">
+        <div class="col-auto">
+            <h2>Solicitudes</h2>
+        </div>
+        <div class="col-auto">
+            <button id="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRequestModal">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+            <button id="deleteButton" class="btn btn-danger disabled" data-bs-toggle="modal"
+                data-bs-target="#deleteRequestModal">
+                <i class="bi bi-trash-fill"></i>
+            </button>
+        </div>
+    </div>
+    <div class="mb-3 row  align-items-center pb-2 border-bottom border-secondary">
+        {{#ifEquals user.role 'admin'}}
+        <button onclick="acceptRequests()" id="acceptRequestButton" class="btn btn-success col-6 col-sm-3 me-sm-3 col-md-3 disabled">
+            <i class="bi bi-check-circle-fill me-2" style=" left: 0px; top: 0px; z-index: 10;"></i>
+            Autorizar
+        </button>
+        {{/ifEquals}}
+        {{#ifEquals user.role 'admin'}}
+        <button onclick="denyRequests()" id="denyRequestButton" class="btn btn-danger col-6 col-sm-3 me-sm-3 col-md-3 disabled">
+            <i class="bi bi-dash-circle-fill me-2" style=" left: 0px; top: 0px; z-index: 10;"></i>
+            Denegar
+        </button>
+        {{/ifEquals}}
+
+        <button class="btn btn-sm col-auto">
+            <i class="bi bi-filter me-2"></i>
+            Filtrar
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget blank no-padding">
+                <div class="panel panel-default work-progress-table"
+                    style="max-width: 100%; overflow: auto; max-height: 25rem;">
+                    <!-- Table -->
+                    {{#if requests}}
+                    <!-- Workers Table -->
+                    {{> Requests/RequestsTable }}
+                    <!-- /Workers Table -->
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- {{> Generals/Modal idModal='exampleModal' actionBMsg='Eliminar' title='Eliminar datos sd sd asdsadads' msg='¿Desea
+eliminar esta información?' handler='deleteData'}} --}}
+{{> Generals/DeleteModal idModal='deleteRequestModal' title='Eliminar datos' text='¿Desea eliminar esta información?'
+handler='deleteRequests'}}
+{{> Requests/Modals/CreateRequestModal idModal='createRequestModal' title='Solicitar permiso'}}
+
+
+<script src="../../js/Requests/index.js"></script>

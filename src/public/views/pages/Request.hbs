@@ -1,0 +1,55 @@
+<style>
+    /* estilos personalizados */
+    .handlebars-text {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <div class="d-flex align-items-center">
+        <a href="/requests">
+            <i class="bi bi-arrow-left text-dark" style="font-size: 2rem;"></i>
+        </a>
+        <h1 class="ms-2 m-0">Detalles de la solicitud</h1>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">ID de la solicitud: <span class="handlebars-text">{{request.id}}</span></h5>
+            <p class="card-text"><span class=" display-6">{{request.description}}</span></p>
+            <p class="card-text"><span class="handlebars-text">Tipo:</span> {{request.type}}</p>
+            <p class="card-text"><span class="handlebars-text">Estado:</span>
+                <span class="status fw-bold text-white rounded-1 p-2">{{#ifIsNull request.accepted}}{{/ifIsNull}}</span>
+            </p>
+            <p class="card-text"><span class="handlebars-text">Trabajador:</span> <a
+                    href="/workers/{{request.[WorkerId]}}">{{request.[Worker.name]}}
+                    {{request.[Worker.lastName]}}</a></p>
+            <p class="card-text"><span class="handlebars-text">Correo electrónico del trabajador:</span>
+                <a href="/workers/{{request.[WorkerId]}}">{{request.[Worker.email]}}</a>
+            </p>
+            {{#ifEquals user.role 'admin'}}
+            <h4 class="fw-bold">Detalles del Jefe de Departamento</h4>
+            <p class="card-text"><span class="handlebars-text">ID del usuario:</span> {{request.[Worker.User.id]}}</p>
+            <p class="card-text"><span class="handlebars-text">Nombre del usuario:</span> {{request.[Worker.User.name]}}
+            </p>
+            <p class="card-text"><span class="handlebars-text">Correo electrónico del usuario:</span>
+                {{request.[Worker.User.email]}}
+            </p>
+            <p class="card-text"><span class="handlebars-text">Departamento del usuario:</span>
+                {{request.[Worker.User.department]}}</p>
+            {{/ifEquals}}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const status = document.querySelectorAll('.status')
+        let content
+        status.forEach(item => {
+            content = item.innerHTML.toLocaleLowerCase()
+            item.classList.add(content === 'rechazada' ? "bg-danger" : content === 'pendiente' ? "bg-secondary" : "bg-success")
+        })
+    })
+</script>

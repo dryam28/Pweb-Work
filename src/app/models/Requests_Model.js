@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../database/connect.js';
-import bcryptjs from 'bcryptjs';
 import Worker_Model from './Worker_Model.js';
 
 const Request_Model = sequelize.define('Requests', {
@@ -10,41 +9,26 @@ const Request_Model = sequelize.define('Requests', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    description: {
         type: DataTypes.STRING,
-        allowNull: false
     },
-    email: {
+    type: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        validate: {
+            isIn: [['Licencia', 'Vacaciones', 'Días de asuntos propios', 'Baja médica', 'Excedencias']]
+        }
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    department: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    role: {
-        type: DataTypes.STRING
+    accepted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: null
     }
 }, {
     timestamps: false,
     createdAt: false
 });
 
-User_Model.hasMany(Worker_Model)
-Worker_Model.belongsTo(User_Model)
+Worker_Model.hasOne(Request_Model)
+Request_Model.belongsTo(Worker_Model)
 
-User_Model.beforeCreate(async (user, options) => {
-    try {
-        const salt = await bcryptjs.genSalt(10);
-        user.password = await bcryptjs.hash(user.password, salt);
-    } catch (error) {
-        console.log(error);
-    }
-})
-
-export default User_Model;
+export default Request_Model;
