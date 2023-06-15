@@ -71,7 +71,7 @@ const saveProfileChanges = async (req, res) => {
     return res.redirect('/auth/Profile');
   } catch (error) {
     req.flash('messages', [{ msg: error.message }]);
-    return res.redirect('/auth/Profile');
+    return res.redirect('/auth/Profilllll');
   }
 };
 

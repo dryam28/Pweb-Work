@@ -5,7 +5,6 @@
       <th>Nombre</th>
       <th>Correo</th>
       <th>Departamento</th>
-      <th></th>
     </tr>
   </thead>
   <tbody id="tableBody">
@@ -15,11 +14,6 @@
       <td class="text-capitalize">{{name}}</td>
       <td>{{email}}</td>
       <td class="text-capitalize">{{department}}</td>
-      <td>
-        <a href="/users/{{id}}" class="btn btn-outline-secondary p-2 ">
-          <i class="bi bi-eye-fill" style="font-size: 1.3rem;"></i>
-          </button>
-      </td>
     </tr>
     {{/each}}
   </tbody>

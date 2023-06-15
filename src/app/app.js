@@ -69,10 +69,11 @@ const hbs = create({
       return JSON.stringify({ data: obj });
     },
     ifEquals: function (arg1, arg2, options) {
-      console.log(arg1);
-      console.log(arg2);
       return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
     },
+    ifIsNull: function (arg) {
+      return arg === null ? 'Pendiente' : arg === 0? 'Rechazada' : 'Aceptada'
+    }
   }
 });
 
@@ -101,5 +102,7 @@ app.use('/workers', userVerification, workersRoutes);
 
 //? Sync database changes
 // import './database/db.js'
+// Admin password: admin
+// $2a$10$lIkDNP3pUKS7UgXRXz2KOuAnQCyVuo6M8iBXPJDBlgtijT.p3rZ6G
 
 export default app;

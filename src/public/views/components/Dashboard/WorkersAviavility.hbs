@@ -1,0 +1,65 @@
+<style>
+    .circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .blue-purple-gradient {
+        background: linear-gradient(to right, #5a67d8, #8245b5);
+    }
+
+    .blue-sky-gradient {
+        background: linear-gradient(to right, #a8aff1, #5068f3);
+    }
+
+    .red-white-gradient {
+        background: linear-gradient(to top, #e46f39, #ffbc7e);
+    }
+
+    .percent {
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: -7px;
+    }
+
+    .total {
+        color: #e4e4e4;
+        font-weight: bold;
+    }
+</style>
+
+<main class="container-fluid">
+    <h5 class=" my-2 mb-3 display-6 text-center">Trabajadores</h2>
+        <div class="row justify-content-center">
+            <div class="col-5 col-sm-3 col-md-2 d-flex justify-content-between flex-column align-items-center">
+                <div class="circle blue-purple-gradient" data-percent="75">
+                    <div class="percent">{{dashboardStats.workersStats.availableWorkers.percent}}%</div>
+                    <div class="total">Total: {{dashboardStats.workersStats.availableWorkers.total}}</div>
+                </div>
+                <h5 class="fw-bold text-center mt-2">Disponibles</h2>
+            </div><!-- /.col-lg-4 -->
+
+            <div class="col-5 col-sm-3 col-md-2 d-flex justify-content-between flex-column align-items-center">
+                <div class="circle red-white-gradient" data-percent="75">
+                    <div class="percent">{{dashboardStats.workersStats.unavailableWorkers.percent}}%</div>
+                    <div class="total">Total: {{dashboardStats.workersStats.unavailableWorkers.total}}</div>
+                </div>
+                <h5 class="fw-bold  text-center mt-2">No Disponibles</h2>
+            </div><!-- /.col-lg-4 -->
+
+            <div class="col-12 col-sm-3 col-md-2 d-flex justify-content-between flex-column align-items-center">
+                <div class="circle blue-sky-gradient" data-percent="75">
+                    <div class="percent">100%</div>
+                    <div class="total">Total: {{dashboardStats.workersStats.totalWorkers}}</div>
+                </div>
+                <h5 class="fw-bold text-center mt-2">Total</h2>
+            </div><!-- /.col-lg-4 -->
+        </div>
+</main>

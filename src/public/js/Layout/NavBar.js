@@ -17,7 +17,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     //TODO: que se guarde el estado en local storage de cuando la barra lateral esta abierta
     const isSideBarOpen = localStorage.getItem('isSideBarOpen')
-    isSideBarOpen === 'true'? console.log('si') : console.log('no');;
+    if (isSideBarOpen === 'true' && window.innerWidth > 768) {
+        nav.classList.toggle('show-bar')
+        // change icon
+        toggle.classList.toggle('bx-x')
+        // add padding to body
+        bodypd.classList.toggle('body-pd')
+        // add padding to header
+        headerpd.classList.toggle('body-pd')
+    }
     // Validate that all variables exist
     if (toggle && nav && bodypd && headerpd) {
         toggle.addEventListener('click', () => {
